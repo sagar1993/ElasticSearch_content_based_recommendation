@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Sagar Patni: AW 1213217718</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+
+
+jQuery.getJSON("/getdata", function( data ) {
+	var template = "";
+	for (var i = 0; i < data.length; i++){
+		var header = "<h6>" + data[i]['title'] + "</h6>";
+		var tags = "";
+		for (var j = 0; j < data[i]['data'].length; j++){
+			var d = data[i]['data'][j];
+			var url = d['url'];
+			var title = d['title'];
+			var a_tag = "<li><a href='"+url+"'>"+title+"</a></li>" 
+			tags += a_tag;
+		}
+		header += "<ul>" + tags + "</ul>";
+		template += header;
+	}
+	$('#accordion').html(template);
+});
+
+</script>
+
+	<nav class="navbar navbar-expand-sm">
+	  <!-- Links -->
+	  <ul class="navbar-nav">
+	    <li class="nav-item">
+	      <h4>Sagar Patni AW: assignment 2</h4>
+	    </li>
+	  </ul>
+	</nav>
+
+	<div class="container-fluid" id="accordion">
+
+	</div>
+
+</body>
+</html>
