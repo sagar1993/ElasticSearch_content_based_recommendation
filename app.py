@@ -30,7 +30,7 @@ def read_queries():
 	    res_wikibooks = es.search(index='java_wikibook',from_=0, size=10, body={"query": {
 		"multi_match" : {
 		  "query":    query,
-		  "fields": [ "text"] 
+		  "fields": [ "text", "title"] 
 		}
 	    }})
 	    

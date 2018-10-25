@@ -17,41 +17,111 @@
 <body>
 
 <script type="text/javascript">
-
-
-
-jQuery.getJSON("/getdata", function( data ) {
-	var template = "";
-	for (var i = 0; i < data.length; i++){
-		var header = "<h6>" + data[i]['title'] + "</h6>";
-		var tags = "";
-		for (var j = 0; j < data[i]['data'].length; j++){
-			var d = data[i]['data'][j];
-			var url = d['url'];
-			var title = d['title'];
-			var a_tag = "<li><a href='"+url+"'>"+title+"</a></li>" 
-			tags += a_tag;
+	jQuery.getJSON("/getdata", function( data ) {
+		var template = "";
+		for (var i = 0; i < data.length; i++){
+			var header = "<h6>" + data[i]['title'] + "</h6>";
+			var tags = "";
+			for (var j = 0; j < data[i]['data'].length; j++){
+				var d = data[i]['data'][j];
+				var url = d['url'];
+				var title = d['title'];
+				var a_tag = "<li><a href='"+url+"'>"+title+"</a></li>" 
+				tags += a_tag;
+			}
+			header += "<ul><div class=\"col-md-12\"><p>Recommendations:</p></div>" + tags + "</ul>";
+			template += header;
 		}
-		header += "<ul>" + tags + "</ul>";
-		template += header;
-	}
-	$('#accordion').html(template);
-});
-
+		$('#accordion').html(template);
+	});
 </script>
+	
+	<div class="container-fluid">
+		<nav class="navbar navbar-expand-sm">
+		  <ul class="navbar-nav">
+		    <li class="nav-item">
+		      <h3>Sagar Patni AW: assignment 2</h3>
+		    </li>
+		  </ul>
+		</nav>
 
-	<nav class="navbar navbar-expand-sm">
-	  <!-- Links -->
-	  <ul class="navbar-nav">
-	    <li class="nav-item">
-	      <h4>Sagar Patni AW: assignment 2</h4>
-	    </li>
-	  </ul>
-	</nav>
+		<div class="row">
+			<div class="col-md-12">
+				<h4> Summary </h4>
+				  <ul>
+				    <b>Collection of Data</b>
+				    <li> For data collection I have implemented a web scraping scripts (wikibooks.py/ oracle.py) in python using library BeautifulSoup.
+				    </li>
+				    <br>
+				    <li> The script takes main page url and scrapes the data in the underlying liks. It igonres all the non-textual data tags such as 'style', 'script', 'head', 'title', 'meta', '[document]'. 
+				    </li>
+				    <br>
+				    <li> For wikibooks i have scraped data section by section and for oracle I scraped the data link by link.
+				    </li>
+				    <br>
+				    <li> The script records title for each section and its web url. Collected output in a .csv files with data attributes such as url, title, text. </li>
+				    <br>
+				    <li> There are 670 records for wikibook java programming page and 2157 records for oracle TM page. </li>
+				    <br>
+				    
+				    <b>Indexing the Content</b>
+				    <li> For indexing the data I have used ElasticSearch. It uses Apache Lucene and BM25 algorithm at the core for indexing the data.
+				    </li>
+				    <br>
+				    <li> I inserted all the csv data to the ElasticSearch using the script create_indexs.py from the source folder. 
+				    </li>
+				    <br>
+				    <li> Before inserting, I performed natural language preprocessing on data to remove stop words, non_ascii characters.
+				    </li>
+				    <br>
 
-	<div class="container-fluid" id="accordion">
+				    <b>Web app</b>
+				    <li>
+					I have developed a web application using python flask as a backend and simple html, jquery page as a front end
+				    </li>
+				    <br>
+				    <li>
+					On application start the backend makes call to elastic search engine to get results for predefined queries provided as queries.xlsx 
+				    </li>
+				    <br>
+				    <li>
+					Along with predefiend query search an API is provided to get recommendation for any new search query in ElasticSearch.
+				    </li>
+				    <br>
 
-	</div>
+				    <b><h4>Originality</h4></b>
+				    <li> 
+					Scraped/ indexed Content for oracle TM along with wikibooks data.
+				    </li>
+				    <br>
+				    <li> Performed indexing in Elasticsearch using similarity algorithm BM25, also applied the english analyzer in index mapping while building of indices.
+				    </li>
+				    <br>
+				    <li> 
+					Created two different indexes for oracle and wikibooks and i found that the search results are dominated by the oracle data as it has more content. With two different indices I show search results from both oracle data and wikibooks data.
+				    </li>
+				    <br>
+				    <li> 
+					I have used nltk python package to pre process the data/ search query before adding it to ElasticSearch. I have performed stemming, removal of stop words, removal of non ascii characters which improves overall data quality and recommendation results. 
+				    </li>
+				    <br>
+				    <li> 
+					Provided an API to call ElasticSearch with new search query.
+				    </li>
+				    <br>
+				  </ul>
+			</div>
+		</div>
 
+		<div class="row">
+			<div class="col-md-12">
+				<h4> Objects and Recommendations :</h4>
+			</div>
+
+			<div class="col-md-12" id="accordion">
+				<p style="color:red;"> Please Connect to Server to view results.</p>
+			</div>
+		</div>
+	<div>
 </body>
 </html>
